@@ -1,0 +1,188 @@
+pratical no1:
+Blinking of led:-
+// C++ code
+//
+void setup()
+{
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop()
+{
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(1000); // Wait for 1000 millisecond(s)
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(1000); // Wait for 1000 millisecond(s)
+}
+
+
+2.light sensor
+// C++ code
+//
+
+int lightSensor=0;
+void setup()
+{
+  pinMode(A0, INPUT);
+  pinMode(9, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  lightSensor=analogRead(A0);
+  Serial.println(lightSensor);
+  int ledBrightness=map(lightSensor,0,1023,0,256);
+  analogWrite(9,ledBrightness);
+  delay(1000);
+}
+
+
+3.temperture sensor
+
+// C++ code
+//
+char degree=176;
+void setup()
+{
+  pinMode(A1, INPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  int temp=analogRead(A1);
+  float voltage=(temp*5.0)/1023;
+  float cel=(voltage-0.5)*100.0;
+  Serial.print("Celcius:");
+  Serial.print(cel);
+  Serial.println(degree);
+  delay(1000);
+}
+
+4.Humidty sensor
+// C++ code
+//
+
+int humdity=0;
+void setup()
+{
+  pinMode(A1, INPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  humdity=analogRead(A1);
+  int humidtyPercentage=map(humdity,0,1023,10,50);
+  Serial.print("Humidty:");
+  Serial.print(humidtyPercentage);
+  Serial.println("%");
+  delay(1000);
+}
+
+5.ultrasonic sensor
+
+// C++ code
+//
+
+long duration;
+int distance;
+int trigPin=9;
+int echoPin=10;
+
+void setup()
+{
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin,INPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  digitalWrite(trigPin,LOW);
+  delay(2000);
+  digitalWrite(trigPin,HIGH);
+  delay(10000);
+  digitalWrite(trigPin,LOW);
+  duration=pulseIn(echoPin,HIGH);
+  distance=duration*0.034/2;
+  Serial.print("distance:");
+  Serial.print(distance);
+  Serial.println("cm");
+  delay(2000);
+}
+
+6.servo motor
+// C++ code
+//
+
+#include<Servo.h>
+Servo servoBase;
+
+void setup()
+{
+  servoBase.attach(A1);
+  servoBase.write(0);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  for(int i=0;i<=180;i++){
+    servoBase.write(i);
+    delay(2000);
+  }
+}
+
+7.infrared motion
+
+
+// C++ code
+//
+int sensorState=0;
+void setup()
+{
+  pinMode(2,INPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop()
+{
+  sensorState=digitalRead(2);
+  if(sensorState==LOW){
+  	digitalWrite(LED_BUILTIN,LOW);
+  }
+  else{
+  	digitalWrite(LED_BUILTIN,HIGH);
+  }
+  delay(20);
+}
+
+practical no 8:-
+Gas sensors
+
+int LED = A1;
+const int gas = 0;
+int MQ2pin = A0;
+void setup() {
+Serial.begin(9600);
+}
+void loop() {
+float sensorValue,MQ2pin;
+sensorValue = analogRead(MQ2pin);
+if(sensorValue>= 470){
+digitalWrite(LED,LOW);
+Serial.print(sensorValue);
+Serial.println(" |SMOKE DETECTED");
+ }
+else{
+digitalWrite(LED,HIGH);
+Serial.println("Sensor Value: ");
+Serial.println(sensorValue);
+ } 
+delay(1000);
+}
+float getsensorValue(int pin){
+return (analogRead(pin));
+}
